@@ -1,4 +1,6 @@
+using System.Data.Common;
 using System;
+using System.Threading.Tasks;
 using Infrastructure.EntityFramework.TypeConfigurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -17,6 +19,16 @@ namespace Infrastructure.EntityFramework
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ArticleTypeConfiguration).Assembly);
             RenameTablesAndPropertiesAsSnackCase(modelBuilder);
+        }
+
+
+        public async Task<DbConnection> GetDbConnection()
+        {
+            var connection = this.Database.GetDbConnection();
+            if (connection.State != System.Data.ConnectionState.Open)
+                await connection.OpenAsync();
+
+            return connection;
         }
 
         private static void RenameTablesAndPropertiesAsSnackCase(ModelBuilder modelBuilder)
@@ -48,6 +60,7 @@ namespace Infrastructure.EntityFramework
                 newTableName += tableName[i];
             }
 
+            newTableName += 's';
             entity.SetTableName(newTableName);
         }
 

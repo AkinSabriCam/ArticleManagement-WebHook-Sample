@@ -1,4 +1,10 @@
+using ArticleApi.Commands.Article;
+using Common.UnitOfWork;
+using Domain.Article;
+using Infrastructure;
 using Infrastructure.EntityFramework;
+using Infrastructure.EntityFramework.Repositories;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +35,13 @@ namespace ArticleApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ArticleConsumer", Version = "v1" });
             });
+
+
+            services.AddMediatR(typeof(CreateArticleCommand).Assembly);
+            services.AddScoped<IArticleRepository, ArticleRepository>();
+            services.AddScoped<IArticleDomainService, ArticleDomainService>();
+            services.AddScoped<IAppDbInitializer, AppDbInitializer>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +55,7 @@ namespace ArticleApi
             }
 
             app.UseHttpsRedirection();
-
+            app.ApplicationServices.Migrate().Wait();
             app.UseRouting();
 
             app.UseAuthorization();
