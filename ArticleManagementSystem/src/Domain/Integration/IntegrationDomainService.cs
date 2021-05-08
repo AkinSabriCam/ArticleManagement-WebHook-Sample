@@ -21,6 +21,7 @@ namespace Domain.Integration
             var entity = new Integration();
             SetEditableFields(entity, dto);
 
+            _repository.Add(entity);
             return entity;
         }
 

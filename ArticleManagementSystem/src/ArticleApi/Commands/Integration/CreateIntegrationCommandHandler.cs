@@ -4,6 +4,7 @@ using ArticleApi.Queries.Integration;
 using Common.UnitOfWork;
 using Domain.Integration;
 using Domain.Integration.Dtos;
+using MapsterMapper;
 using MediatR;
 
 namespace ArticleApi.Commands.Integration
@@ -12,37 +13,22 @@ namespace ArticleApi.Commands.Integration
     {
         private readonly IIntegrationDomainService _domainService;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public CreateIntegrationCommandHandler(IIntegrationDomainService domainService, IUnitOfWork unitOfWork)
+        public CreateIntegrationCommandHandler(IIntegrationDomainService domainService, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _domainService = domainService;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task<IntegrationDto> Handle(CreateIntegrationCommand request, CancellationToken cancellationToken)
         {
-
-            var dto = new CreateIntegrationDto
-            {
-                Code = request.Code,
-                Url = request.Url,
-                EndPoint = request.EndPoint,
-                UserName = request.UserName,
-                Password = request.Password
-            };
-
+            var dto = _mapper.Map<CreateIntegrationDto>(request);
             var result = await _domainService.AddAsync(dto);
             await _unitOfWork.SaveChangesAsync();
 
-            return new IntegrationDto
-            {
-                Id = result.Id,
-                Code = result.Code,
-                EndPoint = result.EndPoint,
-                Url = result.Url,
-                UserName = result.UserName,
-                Password = result.Password
-            };
+            return _mapper.Map<IntegrationDto>(result);
         }
     }
 }

@@ -5,8 +5,10 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Common.Entity;
 using Microsoft.EntityFrameworkCore;
+using Common.Repository;
+using Mapster;
 
-namespace Common.Repository
+namespace Infrastructure.EntityFramework.Repositories
 {
     public class Repository<TEntity, TId> : IRepository<TEntity, TId>
                     where TEntity : AggregateRoot<TId>, new() where TId : IEquatable<TId>
@@ -34,7 +36,7 @@ namespace Common.Repository
         public async Task DeleteAsync(TId id)
         {
             var entity = await _dbTable.AsNoTracking()
-                                       .FirstOrDefaultAsync(x => x.Id.Equals(id));
+                        .FirstOrDefaultAsync(x => x.Id.Equals(id));
 
             if (entity == null)
                 throw new ValidationException($"Entity can not be found by {id} to delete.");
@@ -51,12 +53,26 @@ namespace Common.Repository
         public Task<TEntity> GetByIdAsync(TId id)
         {
             return _dbTable.AsNoTracking()
-                           .FirstOrDefaultAsync(x => x.Id.Equals(id));
+                    .FirstOrDefaultAsync(x => x.Id.Equals(id));
         }
 
         public Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return _dbTable.AsNoTracking().AnyAsync(predicate);
+        }
+
+        public Task<TResult> GetByIdAsync<TResult>(TId id) where TResult : class
+        {
+            return _dbTable.AsNoTracking()
+                .ProjectToType<TResult>()
+                .FirstOrDefaultAsync();
+        }
+
+        public Task<List<TResult>> GetAllAsync<TResult>() where TResult : class
+        {
+            return _dbTable.AsNoTracking()
+                .ProjectToType<TResult>()
+                .ToListAsync();
         }
     }
 }

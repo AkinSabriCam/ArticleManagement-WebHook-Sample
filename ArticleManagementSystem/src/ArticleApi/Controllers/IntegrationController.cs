@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ArticleApi.Commands.Integration;
 using ArticleApi.Queries.Integration;
@@ -21,6 +22,12 @@ namespace ArticleApi.Controllers
         public async Task<ActionResult<IntegrationDto>> Create(CreateIntegrationCommand command)
         {
             return await _mediator.Send(command);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<IntegrationDto>>> GetAll()
+        {
+            return await _mediator.Send(new GetAllIntegrationsQuery());
         }
     }
 }

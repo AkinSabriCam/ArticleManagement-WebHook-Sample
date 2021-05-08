@@ -4,6 +4,7 @@ using ArticleApi.Queries;
 using Common.UnitOfWork;
 using Domain.Article;
 using Domain.Article.Dtos;
+using MapsterMapper;
 using MediatR;
 
 namespace ArticleApi.Commands.Article
@@ -12,38 +13,22 @@ namespace ArticleApi.Commands.Article
     {
         private readonly IArticleDomainService _domainService;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public CreateArticleCommandHandler(IArticleDomainService domainService, IUnitOfWork unitOfWork)
+        public CreateArticleCommandHandler(IArticleDomainService domainService, IUnitOfWork unitOfWork, IMapper mapper)
         {
             _domainService = domainService;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         public async Task<ArticleDto> Handle(CreateArticleCommand request, CancellationToken cancellationToken)
         {
-            var result = await _domainService.AddAsync(new CreateArticleDto
-            {
-                Code = request.Code,
-                Title = request.Title,
-                Content = request.Content,
-                IntegrationCodes = request.IntegrationCodes,
-                Category = request.Category,
-                AuthorName = request.AuthorName,
-                AuthorLastName = request.AuthorLastName
-            });
+            var createArticleDto = _mapper.Map<CreateArticleDto>(request);
+            var result = await _domainService.AddAsync(createArticleDto);
 
             await _unitOfWork.SaveChangesAsync();
-
-            return new ArticleDto
-            {
-                Id = result.Id,
-                Code = result.Code,
-                Title = result.Title,
-                Content = result.Content,
-                Category = result.Category,
-                AuthorName = result.AuthorName,
-                AuthorLastName = result.AuthorLastName
-            };
+            return _mapper.Map<ArticleDto>(result);
         }
     }
 }

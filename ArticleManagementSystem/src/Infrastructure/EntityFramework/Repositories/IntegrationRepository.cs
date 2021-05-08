@@ -12,7 +12,6 @@ namespace Infrastructure.EntityFramework.Repositories
         {
 
         }
-
         public Task<bool> IsExistByCodeAsync(string code)
         {
             return _dbTable.AsNoTracking().AnyAsync(x => x.Code.Equals(code));

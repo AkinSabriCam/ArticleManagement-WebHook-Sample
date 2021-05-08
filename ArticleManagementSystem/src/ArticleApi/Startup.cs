@@ -7,6 +7,7 @@ using FluentValidation;
 using Infrastructure;
 using Infrastructure.EntityFramework;
 using Infrastructure.EntityFramework.Repositories;
+using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -50,6 +51,7 @@ namespace ArticleApi
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPipelineBehavior<,>));
             services.AddValidatorsFromAssemblies(new[] { typeof(CreateArticleCommandValidator).Assembly });
+            services.AddScoped<IMapper, Mapper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,7 +68,7 @@ namespace ArticleApi
             app.UseHttpsRedirection();
             app.ApplicationServices.Migrate().Wait();
             app.UseRouting();
-
+            new MapsterProfile().Configure();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -10,7 +10,9 @@ namespace Common.Repository
     {
 
         Task<TEntity> GetByIdAsync(TId id);
+        Task<TResult> GetByIdAsync<TResult>(TId id) where TResult : class;
         Task<List<TEntity>> GetAllAsync();
+        Task<List<TResult>> GetAllAsync<TResult>() where TResult : class;
         Task DeleteAsync(TId id);
         void Add(TEntity entity);
         void Update(TEntity entity);
