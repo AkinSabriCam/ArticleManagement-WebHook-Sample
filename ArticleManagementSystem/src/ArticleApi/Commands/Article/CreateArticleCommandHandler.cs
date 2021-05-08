@@ -36,12 +36,13 @@ namespace ArticleApi.Commands.Article
 
             return new ArticleDto
             {
-                Code = request.Code,
-                Title = request.Title,
-                Content = request.Content,
-                Category = request.Category,
-                AuthorName = request.AuthorName,
-                AuthorLastName = request.AuthorLastName
+                Id = result.Id,
+                Code = result.Code,
+                Title = result.Title,
+                Content = result.Content,
+                Category = result.Category,
+                AuthorName = result.AuthorName,
+                AuthorLastName = result.AuthorLastName
             };
         }
     }

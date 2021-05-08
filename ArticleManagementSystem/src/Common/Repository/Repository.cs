@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -10,7 +11,7 @@ namespace Common.Repository
     public class Repository<TEntity, TId> : IRepository<TEntity, TId>
                     where TEntity : AggregateRoot<TId>, new() where TId : IEquatable<TId>
     {
-        private readonly DbSet<TEntity> _dbTable;
+        protected readonly DbSet<TEntity> _dbTable;
 
         public Repository(DbContext dbContext)
         {
@@ -20,7 +21,7 @@ namespace Common.Repository
         public void Add(TEntity entity)
         {
             if (entity == null)
-                throw new Exception($"Entity can not be null to insert");
+                throw new ValidationException($"Entity can not be null to insert");
 
             _dbTable.Add(entity);
         }
@@ -36,7 +37,7 @@ namespace Common.Repository
                                        .FirstOrDefaultAsync(x => x.Id.Equals(id));
 
             if (entity == null)
-                throw new Exception($"Entity can not be found by {id} to delete.");
+                throw new ValidationException($"Entity can not be found by {id} to delete.");
 
             _dbTable.Remove(entity);
         }

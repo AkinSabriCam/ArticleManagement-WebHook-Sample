@@ -34,6 +34,9 @@ namespace Infrastructure.EntityFramework
                 var migrator = _dbContext.Database.GetService<IMigrator>();
                 var script = migrator.GenerateScript(lastAppliedMigration, lastPendingMigration);
 
+                if (string.IsNullOrWhiteSpace(script))
+                    return;
+
                 var connection = await _dbContext.GetDbConnection();
                 using (var command = connection.CreateCommand())
                 {
@@ -44,7 +47,7 @@ namespace Infrastructure.EntityFramework
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Databa Initializer error : {ex.Message}");
+                _logger.LogError($"Database Initializer error : {ex.Message}");
             }
 
         }

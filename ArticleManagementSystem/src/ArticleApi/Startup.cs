@@ -1,6 +1,8 @@
 using ArticleApi.Commands.Article;
+using ArticleApi.Configurations;
 using Common.UnitOfWork;
 using Domain.Article;
+using FluentValidation;
 using Infrastructure;
 using Infrastructure.EntityFramework;
 using Infrastructure.EntityFramework.Repositories;
@@ -36,12 +38,14 @@ namespace ArticleApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ArticleConsumer", Version = "v1" });
             });
 
-
             services.AddMediatR(typeof(CreateArticleCommand).Assembly);
             services.AddScoped<IArticleRepository, ArticleRepository>();
             services.AddScoped<IArticleDomainService, ArticleDomainService>();
             services.AddScoped<IAppDbInitializer, AppDbInitializer>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPipelineBehavior<,>));
+            services.AddValidatorsFromAssemblies(new[] { typeof(CreateArticleCommandValidator).Assembly });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,6 +58,7 @@ namespace ArticleApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ArticleApi v1"));
             }
 
+            app.UseMiddleware<GlobalExceptionHandlerMiddleware>();
             app.UseHttpsRedirection();
             app.ApplicationServices.Migrate().Wait();
             app.UseRouting();

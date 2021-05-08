@@ -1,6 +1,6 @@
-using System.Security.AccessControl;
 using System;
 using Common.Entity;
+using FluentValidation;
 
 namespace Domain.Article
 {
@@ -17,7 +17,7 @@ namespace Domain.Article
         public void SetCode(string code)
         {
             if (string.IsNullOrWhiteSpace(code))
-                throw new Exception("Code can not be empty!");
+                throw new ValidationException("Code can not be empty!");
 
             Code = code;
         }
@@ -25,7 +25,7 @@ namespace Domain.Article
         public void SetTitle(string title)
         {
             if (string.IsNullOrWhiteSpace(title))
-                throw new Exception("Title can not be empty!");
+                throw new ValidationException("Title can not be empty!");
 
             Title = title;
         }
@@ -33,7 +33,7 @@ namespace Domain.Article
         public void SetContent(string content)
         {
             if (string.IsNullOrWhiteSpace(content))
-                throw new Exception("Content can not be empty!");
+                throw new ValidationException("Content can not be empty!");
 
             Content = content;
         }
@@ -41,7 +41,7 @@ namespace Domain.Article
         public void SetAuthor(string name, string lastName)
         {
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(lastName))
-                throw new Exception("Author name or lastname can not be empty! Please fill all informations about author.");
+                throw new ValidationException("Author name or lastname can not be empty! Please fill all informations about author.");
             AuthorName = name;
             AuthorLastName = lastName;
         }

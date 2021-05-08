@@ -1,6 +1,6 @@
-using System;
 using System.Threading.Tasks;
 using Domain.Article.Dtos;
+using FluentValidation;
 
 namespace Domain.Article
 {
@@ -16,7 +16,7 @@ namespace Domain.Article
         public async Task<Article> AddAsync(CreateArticleDto dto)
         {
             if (await _repository.AnyAsync(x => x.Code == dto.Code))
-                throw new Exception("There is already article with same code!");
+                throw new ValidationException("There is already article with same code!");
 
             var entity = new Article();
             SetEditableFields(dto, entity);

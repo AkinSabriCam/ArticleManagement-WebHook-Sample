@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
 
 namespace ArticleApi
 {
@@ -13,7 +15,14 @@ namespace ArticleApi
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            CreateHostBuilder(args)
+            .UseSerilog((context, loggerConfiguration) =>
+            {
+                loggerConfiguration.MinimumLevel.Debug();
+                loggerConfiguration.MinimumLevel.Information();
+                loggerConfiguration.WriteTo.Console();
+            })
+            .Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -22,5 +31,6 @@ namespace ArticleApi
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
     }
 }
