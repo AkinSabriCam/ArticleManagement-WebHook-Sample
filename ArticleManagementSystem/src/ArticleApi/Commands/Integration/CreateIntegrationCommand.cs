@@ -19,7 +19,7 @@ namespace ArticleApi.Commands.Integration
         {
             RuleFor(x => x.Code).NotEmpty().NotNull()
                 .WithMessage("Integration code can not be null or empty! ").WithErrorCode("AMS201");
-           
+
             RuleFor(x => x.Url).NotEmpty().NotNull()
                 .WithMessage("Integration url can not be null or empty! ").WithErrorCode("AMS202");
             

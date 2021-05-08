@@ -2,6 +2,7 @@ using ArticleApi.Commands.Article;
 using ArticleApi.Configurations;
 using Common.UnitOfWork;
 using Domain.Article;
+using Domain.Integration;
 using FluentValidation;
 using Infrastructure;
 using Infrastructure.EntityFramework;
@@ -41,6 +42,9 @@ namespace ArticleApi
             services.AddMediatR(typeof(CreateArticleCommand).Assembly);
             services.AddScoped<IArticleRepository, ArticleRepository>();
             services.AddScoped<IArticleDomainService, ArticleDomainService>();
+
+            services.AddScoped<IIntegrationRepository, IntegrationRepository>();
+            services.AddScoped<IIntegrationDomainService, IntegrationDomainService>();
             services.AddScoped<IAppDbInitializer, AppDbInitializer>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
