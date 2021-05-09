@@ -74,12 +74,20 @@ namespace Infrastructure.Migrations
                     b.ToTable("articles");
                 });
 
-            modelBuilder.Entity("Domain.Integration.Integration", b =>
+            modelBuilder.Entity("Domain.Integration.IntegrationSetting", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
+
+                    b.Property<string>("ClientId")
+                        .HasColumnType("text")
+                        .HasColumnName("client_id");
+
+                    b.Property<string>("ClientSecret")
+                        .HasColumnType("text")
+                        .HasColumnName("client_secret");
 
                     b.Property<string>("Code")
                         .HasColumnType("text")
@@ -121,7 +129,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("Code", "Url", "EndPoint");
 
-                    b.ToTable("integrations");
+                    b.ToTable("integration_settings");
                 });
 #pragma warning restore 612, 618
         }

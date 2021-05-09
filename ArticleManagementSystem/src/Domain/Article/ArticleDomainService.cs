@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Domain.Article.Dtos;
 using FluentValidation;
@@ -21,9 +22,11 @@ namespace Domain.Article
             var entity = new Article();
             SetEditableFields(dto, entity);
 
-            // entity.Created()
-
             _repository.Add(entity);
+
+            if (dto.IntegrationCodes.Any())
+                entity.Created(dto.IntegrationCodes);
+
             return entity;
         }
 

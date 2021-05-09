@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Common.Event;
 
 namespace Common.Entity
 {

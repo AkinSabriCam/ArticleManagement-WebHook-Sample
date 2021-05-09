@@ -49,7 +49,6 @@ namespace Infrastructure.EntityFramework
             {
                 _logger.LogError($"Database Initializer error : {ex.Message}");
             }
-
         }
     }
 }

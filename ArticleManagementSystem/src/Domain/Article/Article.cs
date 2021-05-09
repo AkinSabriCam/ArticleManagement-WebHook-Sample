@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Common.Entity;
+using Domain.Article.Events;
 using FluentValidation;
 
 namespace Domain.Article
@@ -41,15 +43,14 @@ namespace Domain.Article
         public void SetAuthor(string name, string lastName)
         {
             if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(lastName))
-                throw new ValidationException("Author name or lastname can not be empty! Please fill all informations about author.");
+                throw new ValidationException("Author name or lastname can not be empty!");
             AuthorName = name;
             AuthorLastName = lastName;
         }
 
-        public void Created()
+        public void Created(List<string> articleCodes)
         {
-            //AddDomainEvent()
+            AddDomainEvent(new CreatedArticleEvent(this, articleCodes));
         }
-
     }
 }

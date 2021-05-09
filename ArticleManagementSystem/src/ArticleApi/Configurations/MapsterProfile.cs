@@ -24,11 +24,11 @@ namespace ArticleApi.Configurations
             TypeAdapterConfig<Article, ArticleDto>
                .NewConfig();
 
-            TypeAdapterConfig<CreateIntegrationCommand, CreateIntegrationDto>
+            TypeAdapterConfig<CreateIntegrationSettingsCommand, CreateIntegrationSettingsDto>
                 .NewConfig();
 
 
-            TypeAdapterConfig<Integration, IntegrationDto>
+            TypeAdapterConfig<IntegrationSetting, IntegrationSettingsDto>
                .NewConfig();
         }
     }
