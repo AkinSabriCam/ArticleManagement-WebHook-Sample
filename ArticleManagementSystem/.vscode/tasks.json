@@ -2,41 +2,45 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "build-article-api",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/ArticleApi/ArticleApi.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+                "${workspaceFolder}/src/ArticleApi/ArticleApi.csproj"
             ],
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$tsc"
         },
         {
-            "label": "publish",
+            "label": "build-article-consumer",
             "command": "dotnet",
             "type": "process",
             "args": [
-                "publish",
-                "${workspaceFolder}/src/ArticleApi/ArticleApi.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+                "build",
+                "${workspaceFolder}/src/ArticleConsumer/ArticleConsumer.csproj"
             ],
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$tsc"
         },
         {
-            "label": "watch",
+            "label": "build-firstjournal-api",
             "command": "dotnet",
             "type": "process",
             "args": [
-                "watch",
-                "run",
-                "${workspaceFolder}/src/ArticleApi/ArticleApi.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+                "build",
+                "${workspaceFolder}/integrations/FirstJournal/Api/Api.csproj"
             ],
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$tsc"
+        },
+        {
+            "label": "build-firstjournal-identity",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/integrations/FirstJournal/IdentityServer/IdentityServer.csproj"
+            ],
+            "problemMatcher": "$tsc"
         }
+            
     ]
 }
