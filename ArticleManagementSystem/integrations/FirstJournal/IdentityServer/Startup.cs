@@ -1,7 +1,7 @@
 using System;
-using Api.Model;
 using IdentityServer.Configurations;
 using IdentityServer.Services;
+using Infrastructure.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;

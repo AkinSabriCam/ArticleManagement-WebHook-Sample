@@ -1,13 +1,11 @@
-using System;
 using System.Collections.Generic;
 using Api.Commands;
-using Api.Model;
+using Infrastructure.Model;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,7 +23,6 @@ namespace Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
@@ -69,7 +66,6 @@ namespace Api
                     .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
                     .RequireAuthenticatedUser()
                     .Build());
-                // options.AddPolicy("permission", policy => policy.AddRequirements(new HasPermissionRequirement(permission)));
             });
 
             var authority = Configuration.GetValue<string>("Authority");
@@ -89,7 +85,6 @@ namespace Api
             services.AddMediatR(typeof(CreateArticleCommand).Assembly);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

@@ -40,7 +40,26 @@
                 "${workspaceFolder}/integrations/FirstJournal/IdentityServer/IdentityServer.csproj"
             ],
             "problemMatcher": "$tsc"
+        },
+        {
+            "label": "build-secondjournal-api",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/integrations/SecondJournal/Api/Api.csproj"
+            ],
+            "problemMatcher": "$tsc"
+        },
+        {
+            "label": "build-secondjournal-identity",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/integrations/SecondJournal/IdentityServer/IdentityServer.csproj"
+            ],
+            "problemMatcher": "$tsc"
         }
-            
     ]
 }

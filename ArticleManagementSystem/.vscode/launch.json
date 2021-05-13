@@ -83,6 +83,52 @@
                 "ASPNETCORE_URLS": "http://localhost:4568",
                 "Authority__Url" : "http://localhost:4568"
             }
+        },
+        {
+            "name": "secondjournal-api",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-secondjournal-api",
+            "program": "${workspaceFolder}/integrations/SecondJournal/Api/bin/Debug/net5.0/Api.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/integrations/SecondJournal/Api",
+            "stopAtEntry": false,
+            "launchBrowser": {
+                "enabled": true,
+                "args": "${auto-detect-url}",
+                "windows": {
+                    "command": "cmd.exe",
+                    "args": "/C start ${auto-detect-url}/swagger"
+                }
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "http://localhost:5234",
+                "Authority": "http://localhost:5235"
+            }
+        },
+        {
+            "name": "secondjournal-identityServer",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-secondjournal-identity",
+            "program": "${workspaceFolder}/integrations/SecondJournal/IdentityServer/bin/Debug/net5.0/IdentityServer.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/integrations/SecondJournal/IdentityServer",
+            "stopAtEntry": false,
+            "launchBrowser": {
+                "enabled": true,
+                "args": "${auto-detect-url}",
+                "windows": {
+                    "command": "cmd.exe",
+                    "args": "/C start ${auto-detect-url}/swagger"
+                }
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "http://localhost:5235",
+                "Authority__Url": "http://localhost:5235"
+            }
         }
     ],
     "compounds": [
@@ -98,6 +144,13 @@
             "configurations": [
                 "firstjournal-api",
                 "firstjournal-identityServer"
+            ]
+        },
+        {
+            "name": "SJApi+SJIdentityServer",
+            "configurations": [
+                "secondjournal-api",
+                "secondjournal-identityServer"
             ]
         }
     ]
