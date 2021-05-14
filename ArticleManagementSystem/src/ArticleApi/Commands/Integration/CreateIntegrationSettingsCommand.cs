@@ -9,6 +9,8 @@ namespace ArticleApi.Commands.Integration
         public string Code { get; set; }
         public string Url { get; set; }
         public string EndPoint { get; set; }
+        public string TokenUrl { get; set; }
+        public string TokenEndPoint { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
     }
@@ -22,15 +24,21 @@ namespace ArticleApi.Commands.Integration
 
             RuleFor(x => x.Url).NotEmpty().NotNull()
                 .WithMessage("Integration url can not be null or empty! ").WithErrorCode("AMS202");
-            
+
             RuleFor(x => x.EndPoint).NotEmpty().NotNull()
                 .WithMessage("Integration endpoint can not be null or empty! ").WithErrorCode("AMS203");
-           
+
+            RuleFor(x => x.TokenUrl).NotEmpty().NotNull()
+                .WithMessage("Integration token url can not be null or empty! ").WithErrorCode("AMS204");
+
+            RuleFor(x => x.TokenEndPoint).NotEmpty().NotNull()
+                .WithMessage("Integration token endpoint can not be null or empty! ").WithErrorCode("AMS205");
+
             RuleFor(x => x.UserName).NotEmpty().NotNull()
-                .WithMessage("Integration username not be null or empty! ").WithErrorCode("AMS204");
+                .WithMessage("Integration username not be null or empty! ").WithErrorCode("AMS206");
 
             RuleFor(x => x.Password).NotEmpty().NotNull()
-                .WithMessage("Integration password can not be null or empty! ").WithErrorCode("AMS205");
+                .WithMessage("Integration password can not be null or empty! ").WithErrorCode("AMS207");
         }
     }
 }

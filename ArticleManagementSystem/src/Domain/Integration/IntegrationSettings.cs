@@ -8,6 +8,8 @@ namespace Domain.Integration
         public string Code { get; private set; }
         public string Url { get; private set; }
         public string EndPoint { get; private set; }
+        public string TokenUrl { get; set; }
+        public string TokenEndPoint { get; set; }
         public string UserName { get; private set; }
         public string Password { get; private set; }
         public string ClientId { get; set; }
@@ -51,6 +53,22 @@ namespace Domain.Integration
                 throw new ValidationException("Integration Password can not be empty!");
 
             Password = password;
+        }
+
+        public void SetTokenUrl(string tokenUrl)
+        {
+            if (string.IsNullOrWhiteSpace(tokenUrl))
+                throw new ValidationException("TokenUrl can not be empty!");
+
+            TokenUrl = tokenUrl;
+        }
+
+        public void SetTokenEndPoint(string tokenEndPoint)
+        {
+            if (string.IsNullOrWhiteSpace(tokenEndPoint))
+                throw new ValidationException("Token Endpoint can not be empty!");
+
+            TokenEndPoint = tokenEndPoint;
         }
     }
 }

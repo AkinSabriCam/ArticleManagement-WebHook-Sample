@@ -12,7 +12,13 @@ namespace Infrastructure.EntityFramework.Repositories
         {
 
         }
-        public Task<bool> IsExistByCodeAsync(string code)
+
+        public Task<IntegrationSetting> GetByCodeAsync(string code)
+        {
+            return _dbTable.AsNoTracking().FirstOrDefaultAsync(x => x.Code.Equals(code));
+        }
+
+        public Task<bool> IsExistAsync(string code)
         {
             return _dbTable.AsNoTracking().AnyAsync(x => x.Code.Equals(code));
         }

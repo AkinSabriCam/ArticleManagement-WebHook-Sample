@@ -6,6 +6,7 @@ namespace Domain.Integration
 {
     public interface IIntegrationSettingsRepository : IRepository<IntegrationSetting, Guid>
     {
-        Task<bool> IsExistByCodeAsync(string code);
+        Task<bool> IsExistAsync(string code);
+        Task<IntegrationSetting> GetByCodeAsync(string code);
     }
 }

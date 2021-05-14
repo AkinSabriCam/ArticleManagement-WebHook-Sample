@@ -15,7 +15,7 @@ namespace Domain.Integration
 
         public async Task<IntegrationSetting> AddAsync(CreateIntegrationSettingsDto dto)
         {
-            if (await _repository.IsExistByCodeAsync(dto.Code))
+            if (await _repository.IsExistAsync(dto.Code))
                 throw new ValidationException("There is already integration with same code!");
 
             var entity = new IntegrationSetting();
@@ -28,8 +28,10 @@ namespace Domain.Integration
         private static void SetEditableFields(IntegrationSetting integration, CreateIntegrationSettingsDto dto)
         {
             integration.SetCode(dto.Code);
-            integration.SetEndPoint(dto.EndPoint);
             integration.SetUrl(dto.Url);
+            integration.SetEndPoint(dto.EndPoint);
+            integration.SetTokenUrl(dto.TokenUrl);
+            integration.SetTokenEndPoint(dto.TokenEndPoint);
             integration.SetUserName(dto.UserName);
             integration.SetPassword(dto.Password);
         }
