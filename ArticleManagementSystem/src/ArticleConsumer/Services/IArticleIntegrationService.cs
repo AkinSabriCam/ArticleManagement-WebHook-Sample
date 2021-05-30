@@ -3,7 +3,7 @@ using Domain.Article.Events;
 
 namespace ArticleConsumer.Services
 {
-    public interface IArticelntegrationService
+    public interface IArticleIntegrationService
     {
         Task SendToIntegrations(CreatedArticleEvent articleEvent);
     }

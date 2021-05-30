@@ -70,5 +70,21 @@ namespace Domain.Integration
 
             TokenEndPoint = tokenEndPoint;
         }
+
+        public void SetClientId(string clientId)
+        {
+            if (string.IsNullOrWhiteSpace(clientId))
+                throw new ValidationException("Client id can not be empty!");
+
+            ClientId = clientId;
+        }
+
+        public void SetClientSecret(string clientSecret)
+        {
+            if (string.IsNullOrWhiteSpace(clientSecret))
+                throw new ValidationException("Client secret can not be empty!");
+
+            ClientSecret = clientSecret;
+        }
     }
 }

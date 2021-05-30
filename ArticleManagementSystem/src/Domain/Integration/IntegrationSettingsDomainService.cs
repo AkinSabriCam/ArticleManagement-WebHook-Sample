@@ -34,6 +34,8 @@ namespace Domain.Integration
             integration.SetTokenEndPoint(dto.TokenEndPoint);
             integration.SetUserName(dto.UserName);
             integration.SetPassword(dto.Password);
+            integration.SetClientId(dto.ClientId);
+            integration.SetClientSecret(dto.ClientSecret);
         }
     }
 }

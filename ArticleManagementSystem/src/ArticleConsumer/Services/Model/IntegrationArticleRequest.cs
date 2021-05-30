@@ -6,10 +6,15 @@ namespace ArticleConsumer.Services.Model
     public class IntegrationArticleRequest
     {
         public ArticleRequestModel ArticleModel { get; set; }
+        public string Code { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
         public string ClientId { get; set; }
         public string ClientSecret { get; set; }
+        public string Url { get; set; }
+        public string EndPoint { get; set; }
+        public string TokenUrl { get; set; }
+        public string TokenEndPoint { get; set; }
     }
 
     public class ArticleRequestModel

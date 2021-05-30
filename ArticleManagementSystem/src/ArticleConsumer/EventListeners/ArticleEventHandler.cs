@@ -5,24 +5,25 @@ using System.Threading.Tasks;
 using Domain.Article.Events;
 using Domain.Integration;
 using Microsoft.Extensions.Logging;
+using ArticleConsumer.Services;
 
 namespace ArticleConsumer.EventListeners
 {
     public class ArticleEventHandler : IEventHandler<CreatedArticleEvent>
     {
-        private readonly IIntegrationSettingsRepository _integrationRepository;
+        private readonly IArticleIntegrationService _integrationService;
         private readonly ILogger<ArticleEventHandler> _logger;
 
-        public ArticleEventHandler(IIntegrationSettingsRepository integrationRepository, ILogger<ArticleEventHandler> logger)
+        public ArticleEventHandler(ILogger<ArticleEventHandler> logger, IArticleIntegrationService integrationService)
         {
-            _integrationRepository = integrationRepository;
             _logger = logger;
+            _integrationService = integrationService;
         }
 
-        public Task Handle(CreatedArticleEvent @event)
+        public async Task Handle(CreatedArticleEvent @event)
         {
             _logger.LogInformation($"ArticleEventHandler handled event : {JsonSerializer.Serialize(@event)}");
-            return Task.CompletedTask;
+            await _integrationService.SendToIntegrations(@event);
         }
     }
 }

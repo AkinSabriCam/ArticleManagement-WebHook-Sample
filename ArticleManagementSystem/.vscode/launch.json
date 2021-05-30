@@ -5,19 +5,20 @@
     "version": "0.2.0",
     "configurations": [
 
+
         {
-            "name": "article-consumer",
+            "name": "consumer",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-article-consumer",
-            "program": "${workspaceFolder}/src/ArticleConsumer/bin/Debug/net5.0/ArticleApi.dll",
+            "program": "${workspaceFolder}/src/ArticleConsumer/bin/Debug/net5.0/ArticleConsumer.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/ArticleConsumer",
             "stopAtEntry": false,
             "console": "internalConsole"
         },
         {
-            "name": "article-api",
+            "name": "api",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-article-api",
@@ -39,7 +40,7 @@
             }
         },
         {
-            "name": "firstjournal-api",
+            "name": "FJ",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-firstjournal-api",
@@ -62,7 +63,7 @@
             }
         },
         {
-            "name": "firstjournal-identityServer",
+            "name": "FJIdentity",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-firstjournal-identity",
@@ -85,7 +86,7 @@
             }
         },
         {
-            "name": "secondjournal-api",
+            "name": "SJ",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-secondjournal-api",
@@ -108,7 +109,7 @@
             }
         },
         {
-            "name": "secondjournal-identityServer",
+            "name": "SJIdentity",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-secondjournal-identity",
@@ -133,24 +134,44 @@
     ],
     "compounds": [
         {
-            "name": "ArticleApi+ArticleConsumer",
+            "name": "Api+Consumer",
             "configurations": [
-                "article-api",
-                "article-consumer"
+                "api",
+                "consumer"
             ]
         },
         {
-            "name": "FJApi+FJIdentityServer",
+            "name": "FJ+FJIdentity",
             "configurations": [
-                "firstjournal-api",
-                "firstjournal-identityServer"
+                "FJ",
+                "FJIdentity"
             ]
         },
         {
-            "name": "SJApi+SJIdentityServer",
+            "name": "SJ+SJIdentity",
             "configurations": [
-                "secondjournal-api",
-                "secondjournal-identityServer"
+                "SJ",
+                "SJIdentity"
+            ]
+        },
+        {
+            "name": "Api+Consumer+FJ-FJIdentity",
+            "configurations": [
+                "api",
+                "consumer",
+                "FJ",
+                "FJIdentity"
+            ]
+        },
+        {
+            "name": "all-projects",
+            "configurations": [
+                "api",
+                "consumer",
+                "FJ",
+                "FJIdentity",
+                "SJ",
+                "SJIdentity"
             ]
         }
     ]

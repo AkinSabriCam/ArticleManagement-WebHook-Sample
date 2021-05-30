@@ -13,6 +13,8 @@ using ArticleConsumer.EventListeners;
 using Domain.Article.Events;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using ArticleConsumer.Services;
+using ArticleConsumer.Infrastructure.Caching;
 
 namespace ArticleConsumer
 {
@@ -38,11 +40,18 @@ namespace ArticleConsumer
                 {
                     var configuration = hostContext.Configuration;
                     services.AddDbContext<AppDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("Default")));
+                    services.AddHttpClient();
+
                     services.AddScoped<IIntegrationSettingsRepository, IntegrationSettingsRepository>();
                     services.AddScoped<IEventHandler<CreatedArticleEvent>, ArticleEventHandler>();
+                    services.AddScoped<IArticleIntegrationService, ArticleIntegrationService>();
+                    services.AddScoped<IIntegrationHttpClient, IntegrationHttpClient>();
+                    services.AddScoped<IRedisCacheDbProvider, RedisCacheDbProvider>();
+                    services.AddScoped<IRedisManager, RedisManager>();
 
                     var options = new RabbitmqSettings();
                     configuration.GetSection("RabbitMq").Bind(options);
+                    services.Configure<RedisSettingsModel>(configuration.GetSection("RedisSettings"));
 
                     services.AddMassTransit(x =>
                     {
