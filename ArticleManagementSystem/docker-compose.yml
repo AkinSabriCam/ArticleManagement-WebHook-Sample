@@ -1,0 +1,64 @@
+version: '3'
+
+services:
+
+  first_journal_db:
+    image: postgres:10.6-alpine
+    container_name: first_journal_db
+    environment:
+      - POSTGRES_DB=FirstJournalDb
+      - POSTGRES_USER=dbadmin
+      - POSTGRES_PASSWORD=dbadmin
+    command:
+      - -c
+      - max_prepared_transactions=100
+    ports:
+      - "5435:5432"
+  
+  second_journal_db:
+    image: postgres:10.6-alpine
+    container_name: second_journal_db
+    environment:
+      - POSTGRES_DB=SecondJournalDb
+      - POSTGRES_USER=dbadmin
+      - POSTGRES_PASSWORD=dbadmin
+    command:
+      - -c
+      - max_prepared_transactions=100
+    ports:
+      - "5436:5432"
+  
+  article_management_db:
+    image: postgres:10.6-alpine
+    container_name: article_management_db
+    environment:
+      - POSTGRES_DB=ArticleManagementDb
+      - POSTGRES_USER=dbadmin
+      - POSTGRES_PASSWORD=dbadmin
+    command:
+      - -c
+      - max_prepared_transactions=100
+    ports:
+      - "5437:5432"
+
+  article_management_mb:
+    image: rabbitmq:3-management
+    container_name: article_management_mb
+    hostname: rabbit1
+    environment:
+      - RABBITMQ_ERLANG_COOKIE=SWQOKODSQALRPCLNMEQG
+      - RABBITMQ_DEFAULT_USER=rabbitmq
+      - RABBITMQ_DEFAULT_PASS=rabbitmq
+      - RABBITMQ_DEFAULT_VHOST=/
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    labels:
+      NAME: "rabbitmq1"
+      
+  redis:
+    image: redis
+    container_name: article_management_redis
+    ports:
+      - "6379:6379"
+

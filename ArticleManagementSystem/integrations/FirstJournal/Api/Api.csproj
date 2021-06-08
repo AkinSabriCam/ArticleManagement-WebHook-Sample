@@ -8,6 +8,7 @@
     <PackageReference Include="MediatR" Version="9.0.0"/>
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0"/>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.1"/>
+    <PackageReference Include="Serilog" Version="2.10.1-dev-01308"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj"/>

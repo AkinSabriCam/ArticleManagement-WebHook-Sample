@@ -1,11 +1,14 @@
+using System;
 using System.Collections.Generic;
 using Api.Commands;
+using Api.Configuration;
 using Infrastructure.Model;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -81,8 +84,21 @@ namespace Api
                 options.RequireHttpsMetadata = false;
             });
 
-
             services.AddMediatR(typeof(CreateArticleCommand).Assembly);
+
+
+            services.AddIdentity<IdentityUser<Guid>, IdentityRole<Guid>>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 4;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+            })
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
+
+            services.AddScoped<IDbContextInitializer, DbContextInitializer>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -95,9 +111,8 @@ namespace Api
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
+            app.ApplicationServices.MigrateAsync().Wait();
             app.UseAuthentication();
             app.UseAuthorization();
 

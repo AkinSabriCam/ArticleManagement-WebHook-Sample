@@ -1,9 +1,6 @@
-using System.Linq;
-using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Domain.Article.Events;
-using Domain.Integration;
 using Microsoft.Extensions.Logging;
 using ArticleConsumer.Services;
 
