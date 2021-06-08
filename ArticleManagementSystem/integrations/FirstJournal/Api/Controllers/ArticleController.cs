@@ -19,7 +19,6 @@ namespace Api.Controllers
             _mediator = mediator;
         }
 
-
         [HttpPost]
         public async Task<ActionResult> Create(CreateArticleCommand command)
         {

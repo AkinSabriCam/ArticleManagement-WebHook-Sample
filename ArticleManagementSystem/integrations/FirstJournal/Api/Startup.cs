@@ -28,11 +28,10 @@ namespace Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "First Journal Api", Version = "v1" });
 
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
@@ -62,7 +61,6 @@ namespace Api
             });
 
             services.AddDbContext<AppDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Default")));
-
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
@@ -85,8 +83,6 @@ namespace Api
             });
 
             services.AddMediatR(typeof(CreateArticleCommand).Assembly);
-
-
             services.AddIdentity<IdentityUser<Guid>, IdentityRole<Guid>>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -109,10 +105,10 @@ namespace Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "First Journal Api v1"));
             }
+            app.ApplicationServices.MigrateAsync().Wait();
 
             app.UseHttpsRedirection();
             app.UseRouting();
-            app.ApplicationServices.MigrateAsync().Wait();
             app.UseAuthentication();
             app.UseAuthorization();
 

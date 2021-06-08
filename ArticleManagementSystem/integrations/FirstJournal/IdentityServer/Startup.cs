@@ -29,7 +29,7 @@ namespace IdentityServer
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "IdentityServer", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "First Journal IdentityServer", Version = "v1" });
             });
 
             services.AddDbContext<AppDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Default")));

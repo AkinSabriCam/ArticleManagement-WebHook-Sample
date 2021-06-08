@@ -37,7 +37,7 @@ namespace Api
             services.AddControllers();
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Api", Version = "v1" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Title = "Second Journal Api", Version = "v1" });
 
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
@@ -111,7 +111,7 @@ namespace Api
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Second Journal Api v1"));
             }
 
             app.UseHttpsRedirection();

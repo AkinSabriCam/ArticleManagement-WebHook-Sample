@@ -8,7 +8,8 @@ namespace IdentityServer.Configurations
     {
         public static void AddMyIdentityServer(this IServiceCollection services)
         {
-            services.AddIdentityServer()
+            services
+            .AddIdentityServer()
             .AddAspNetIdentity<IdentityUser<Guid>>()
             .AddDeveloperSigningCredential()
             .AddInMemoryClients(IdentityServerConfig.GetClients())

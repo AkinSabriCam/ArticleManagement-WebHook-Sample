@@ -17,7 +17,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterUserCommand command)
+        public async Task<ActionResult> Register(RegisterUserCommand command)
         {
             return Ok(await _mediator.Send(command));
         }
