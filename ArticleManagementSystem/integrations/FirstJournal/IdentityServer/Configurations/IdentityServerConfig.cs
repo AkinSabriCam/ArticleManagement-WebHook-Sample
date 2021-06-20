@@ -19,9 +19,9 @@ namespace IdentityServer.Configurations
                     AllowOfflineAccess = true,
                     RefreshTokenExpiration = TokenExpiration.Sliding,
                     RefreshTokenUsage = TokenUsage.ReUse,
-                    AllowedScopes = { "fj.api.scope" },
-                    UpdateAccessTokenClaimsOnRefresh = true,
                     ClientSecrets = {new Secret("fj.api.secret".Sha256())},
+                    UpdateAccessTokenClaimsOnRefresh = true,
+                    AllowedScopes = { "fj.api.scope" },
                 }
             };
         }

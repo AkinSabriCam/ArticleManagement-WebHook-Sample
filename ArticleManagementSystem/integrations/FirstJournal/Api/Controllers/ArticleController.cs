@@ -22,8 +22,8 @@ namespace Api.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(CreateArticleCommand command)
         {
-            return Ok(await _mediator.Send(command));
-        }
+            return Ok(await _mediator.Send(command)); 
+        }   
 
         [HttpGet]
         public async Task<ActionResult> Get()

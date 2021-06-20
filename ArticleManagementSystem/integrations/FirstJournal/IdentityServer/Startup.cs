@@ -33,7 +33,6 @@ namespace IdentityServer
             });
 
             services.AddDbContext<AppDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Default")));
-
             services.AddIdentity<IdentityUser<Guid>, IdentityRole<Guid>>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -60,9 +59,10 @@ namespace IdentityServer
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IdentityServer v1"));
             }
 
-            app.UseIdentityServer();
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseIdentityServer();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

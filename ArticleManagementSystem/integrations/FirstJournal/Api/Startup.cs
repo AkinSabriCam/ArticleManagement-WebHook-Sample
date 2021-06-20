@@ -61,6 +61,7 @@ namespace Api
             });
 
             services.AddDbContext<AppDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Default")));
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
@@ -69,7 +70,7 @@ namespace Api
                     .Build());
             });
 
-            var authority = Configuration.GetValue<string>("Authority");
+            var authorityUrl = Configuration.GetValue<string>("Authority");
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -77,7 +78,7 @@ namespace Api
             })
             .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
             {
-                options.Authority = Configuration.GetValue<string>("Authority");
+                options.Authority = authorityUrl;
                 options.Audience = "fj.api.resource";
                 options.RequireHttpsMetadata = false;
             });
