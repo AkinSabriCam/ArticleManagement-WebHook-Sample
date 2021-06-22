@@ -21,14 +21,6 @@ This project is a sample about how to develop and maintain webhook system with a
 
 ![](https://github.com/AkinSabriCam/ArticleManagement-WebHook-Sample/blob/main/images/webhookArchitecture.PNG)
 
-
-
-
-
-
-
-
-
 ## Use-Case
 
 This project is an article management system. We can insert article with integration codes and also we can send asynchronously this article data to all integration project.
