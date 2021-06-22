@@ -19,7 +19,7 @@ This project is a sample about how to develop and maintain webhook system with a
 
 
 
-![](C:\Users\acam\Documents\GitHub\ArticleManagement-WebHook-Sample\images\webhookArchitecture.PNG)
+![](https://github.com/AkinSabriCam/ArticleManagement-WebHook-Sample/blob/main/images/webhookArchitecture.PNG)
 
 
 
@@ -41,19 +41,19 @@ This project is an article management system. We can insert article with integra
 
 I am sharing screenshots about how we can try this webhook system and see results. 
 
-<img src="C:\Users\acam\Documents\GitHub\ArticleManagement-WebHook-Sample\images\firstJournalRegister.PNG" style="zoom: 50%;" />  Use "register" to create an user for integrations
+<img src="https://github.com/AkinSabriCam/ArticleManagement-WebHook-Sample/blob/main/images/firstJournalRegister.PNG" style="zoom: 50%;" />  Use "register" to create an user for integrations
 
-  <img src="C:\Users\acam\Documents\GitHub\ArticleManagement-WebHook-Sample\images\integrationSettingsGetResponse.PNG" style="zoom: 45%;" />       Insert settings datas about integration projects
+  <img src="https://github.com/AkinSabriCam/ArticleManagement-WebHook-Sample/blob/main/images/integrationSettingsGetResponse.PNG" style="zoom: 45%;" />       Insert settings datas about integration projects
 
- <img src="C:\Users\acam\Documents\GitHub\ArticleManagement-WebHook-Sample\images\postArticle.PNG" style="zoom:50%;" />    Insert an article with codes in Article Api
+ <img src="https://github.com/AkinSabriCam/ArticleManagement-WebHook-Sample/blob/main/images/postArticle.PNG" style="zoom:50%;" />    Insert an article with codes in Article Api
 
-<img src="C:\Users\acam\Documents\GitHub\ArticleManagement-WebHook-Sample\images\firstJournalArticle.PNG" style="zoom: 50%;" />              You can see the article data in First Journal Api
+<img src="https://github.com/AkinSabriCam/ArticleManagement-WebHook-Sample/blob/main/images/firstJournalArticle.PNG" style="zoom: 50%;" />              You can see the article data in First Journal Api
 
-<img src="C:\Users\acam\Documents\GitHub\ArticleManagement-WebHook-Sample\images\secondJournalArticle.PNG" style="zoom:50%;" />  You can see the article in Second Journal Api
+<img src="https://github.com/AkinSabriCam/ArticleManagement-WebHook-Sample/blob/main/images/secondJournalArticle.PNG" style="zoom:50%;" />  You can see the article in Second Journal Api
 
 
 
-## How We Can Login In Integration Projects?
+## How Can log in In Integration Projects?
 
 We should use related IdentityServer projects to login in integration projects
 
