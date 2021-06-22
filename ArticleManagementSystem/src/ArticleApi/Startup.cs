@@ -1,18 +1,5 @@
-using System;
-using ArticleApi.Commands.Article;
 using ArticleApi.Configurations;
-using Common.Event;
-using Common.UnitOfWork;
-using Domain.Article;
-using Domain.Integration;
-using FluentValidation;
 using Infrastructure.EntityFramework;
-using Infrastructure.EntityFramework.Repositories;
-using Infrastructure.MassTransit;
-using Infrastructure.StartupConfigurations;
-using MapsterMapper;
-using MassTransit;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +19,6 @@ namespace ArticleApi
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(options =>
@@ -44,41 +30,10 @@ namespace ArticleApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ArticleApi", Version = "v1" });
             });
 
-
-            services.AddMediatR(typeof(CreateArticleCommand).Assembly);
-            services.AddScoped<IArticleRepository, ArticleRepository>();
-            services.AddScoped<IArticleDomainService, ArticleDomainService>();
-
-            services.AddScoped<IIntegrationSettingsRepository, IntegrationSettingsRepository>();
-            services.AddScoped<IIntegrationSettingsDomainService, IntegrationSettingsDomainService>();
-            services.AddScoped<IAppDbInitializer, AppDbInitializer>();
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPipelineBehavior<,>));
-            services.AddValidatorsFromAssemblies(new[] { typeof(CreateArticleCommandValidator).Assembly });
-            services.AddScoped<IMapper, Mapper>();
-            services.AddScoped<IDomainEventPublisher, DomainEventPublisher>();
-
-            var options = new RabbitmqSettings();
-            Configuration.GetSection("Rabbitmq").Bind(options);
-
-            services.AddMassTransit(x =>
-            {
-                x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(configurator =>
-                    {
-                        configurator.Host(new Uri($"{options.Host}:{options.Port}"),
-                        h =>
-                        {
-                            h.Username(options.Username);
-                            h.Password(options.Password);
-                        });
-                    }));
-            });
-
-            services.AddMassTransitHostedService();
+            services.RegisterMyServices();
+            services.AddMyMasstransit(Configuration);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

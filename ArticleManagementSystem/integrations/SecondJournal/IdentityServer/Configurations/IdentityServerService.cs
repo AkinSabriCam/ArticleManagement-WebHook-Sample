@@ -15,6 +15,8 @@ namespace IdentityServer.Configurations
             .AddInMemoryApiScopes(IdentityServerConfig.GetApiScopes())
             .AddInMemoryApiResources(IdentityServerConfig.GetApiResources());
             //.AddProfileService<IdentityProfileService>();
+
+            // If you want to manage token params and claims you can add Custome Profile service here.
         }
     }
 }

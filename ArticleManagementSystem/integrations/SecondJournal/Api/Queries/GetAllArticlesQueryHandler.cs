@@ -11,6 +11,12 @@ namespace Api.Queries
     public class GetAllArticlesQueryHandler : IRequestHandler<GetAllArticlesQuery, List<ArticleDto>>
     {
         public readonly AppDbContext _dbContext;
+
+        public GetAllArticlesQueryHandler(AppDbContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
+
         public async Task<List<ArticleDto>> Handle(GetAllArticlesQuery request, CancellationToken cancellationToken)
         {
             var articleDtoList = new List<ArticleDto>();

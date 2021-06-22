@@ -1,20 +1,11 @@
 ﻿using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using Infrastructure.EntityFramework;
 using Microsoft.EntityFrameworkCore;
-using Domain.Integration;
-using Infrastructure.EntityFramework.Repositories;
-using MassTransit;
-using Infrastructure.StartupConfigurations;
-using ArticleConsumer.EventListeners;
-using Domain.Article.Events;
-using Microsoft.Extensions.Logging;
 using Serilog;
-using ArticleConsumer.Services;
-using ArticleConsumer.Infrastructure.Caching;
+using ArticleConsumer.Configuration;
 
 namespace ArticleConsumer
 {
@@ -39,43 +30,10 @@ namespace ArticleConsumer
                .ConfigureServices((hostContext, services) =>
                 {
                     var configuration = hostContext.Configuration;
+
                     services.AddDbContext<AppDbContext>(options => options.UseNpgsql(configuration.GetConnectionString("Default")));
-                    services.AddHttpClient();
-
-                    services.AddScoped<IIntegrationSettingsRepository, IntegrationSettingsRepository>();
-                    services.AddScoped<IEventHandler<CreatedArticleEvent>, ArticleEventHandler>();
-                    services.AddScoped<IArticleIntegrationService, ArticleIntegrationService>();
-                    services.AddScoped<IIntegrationHttpClient, IntegrationHttpClient>();
-                    services.AddScoped<IRedisCacheDbProvider, RedisCacheDbProvider>();
-                    services.AddScoped<IRedisManager, RedisManager>();
-
-                    var options = new RabbitmqSettings();
-                    configuration.GetSection("RabbitMq").Bind(options);
-                    services.Configure<RedisSettingsModel>(configuration.GetSection("RedisSettings"));
-
-                    services.AddMassTransit(x =>
-                    {
-                        x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(configurator =>
-                        {
-                            configurator.Host(new Uri($"{options.Host}:{options.Port}"),
-                            h =>
-                            {
-                                h.Username(options.Username);
-                                h.Password(options.Password);
-                            });
-
-                            configurator.ReceiveEndpoint("article_events", receiverConfigurator =>
-                            {
-                                receiverConfigurator.Handler<CreatedArticleEvent>(async context =>
-                                {
-                                    var articleEventHandler = services.BuildServiceProvider().GetRequiredService<IEventHandler<CreatedArticleEvent>>();
-                                    await articleEventHandler.Handle(context.Message);
-                                });
-                            });
-                        }));
-                    });
-
-                    services.AddMassTransitHostedService();
+                    services.RegisterMyServices(configuration);
+                    services.AddMyMasstransit(configuration);
                 })
                 .UseSerilog((context, loggerConfiguration) =>
                 {
