@@ -17,17 +17,7 @@ This project is a sample about how to develop and maintain webhook system with a
 
 ------
 
-
-
 ![](C:\Users\acam\Documents\GitHub\ArticleManagement-WebHook-Sample\images\webhookArchitecture.PNG)
-
-
-
-
-
-
-
-
 
 ## Use-Case
 
